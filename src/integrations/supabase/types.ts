@@ -14,16 +14,318 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bosses: {
+        Row: {
+          created_at: string
+          current_hp: number
+          defeated_at: string | null
+          id: string
+          max_hp: number
+          name: string
+          tier: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          current_hp: number
+          defeated_at?: string | null
+          id?: string
+          max_hp: number
+          name: string
+          tier?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          current_hp?: number
+          defeated_at?: string | null
+          id?: string
+          max_hp?: number
+          name?: string
+          tier?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          bosses_defeated: number
+          charisma: number
+          created_at: string
+          creativity: number
+          display_name: string
+          gold: number
+          id: string
+          intellect: number
+          level: number
+          mind: number
+          quests_completed: number
+          updated_at: string
+          vitality: number
+          wisdom: number
+          xp: number
+        }
+        Insert: {
+          bosses_defeated?: number
+          charisma?: number
+          created_at?: string
+          creativity?: number
+          display_name?: string
+          gold?: number
+          id: string
+          intellect?: number
+          level?: number
+          mind?: number
+          quests_completed?: number
+          updated_at?: string
+          vitality?: number
+          wisdom?: number
+          xp?: number
+        }
+        Update: {
+          bosses_defeated?: number
+          charisma?: number
+          created_at?: string
+          creativity?: number
+          display_name?: string
+          gold?: number
+          id?: string
+          intellect?: number
+          level?: number
+          mind?: number
+          quests_completed?: number
+          updated_at?: string
+          vitality?: number
+          wisdom?: number
+          xp?: number
+        }
+        Relationships: []
+      }
+      quest_log: {
+        Row: {
+          category: Database["public"]["Enums"]["quest_category"]
+          completed_at: string
+          damage: number
+          difficulty: Database["public"]["Enums"]["quest_difficulty"]
+          gold: number
+          id: string
+          quest_id: string | null
+          title: string
+          user_id: string
+          xp: number
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["quest_category"]
+          completed_at?: string
+          damage: number
+          difficulty: Database["public"]["Enums"]["quest_difficulty"]
+          gold: number
+          id?: string
+          quest_id?: string | null
+          title: string
+          user_id: string
+          xp: number
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["quest_category"]
+          completed_at?: string
+          damage?: number
+          difficulty?: Database["public"]["Enums"]["quest_difficulty"]
+          gold?: number
+          id?: string
+          quest_id?: string | null
+          title?: string
+          user_id?: string
+          xp?: number
+        }
+        Relationships: []
+      }
+      quests: {
+        Row: {
+          category: Database["public"]["Enums"]["quest_category"]
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          difficulty: Database["public"]["Enums"]["quest_difficulty"]
+          due_at: string | null
+          id: string
+          tags: string[]
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["quest_category"]
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          difficulty?: Database["public"]["Enums"]["quest_difficulty"]
+          due_at?: string | null
+          id?: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["quest_category"]
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          difficulty?: Database["public"]["Enums"]["quest_difficulty"]
+          due_at?: string | null
+          id?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      shop_items: {
+        Row: {
+          description: string
+          emoji: string
+          id: string
+          name: string
+          price: number
+          slot: Database["public"]["Enums"]["item_slot"]
+          sort_order: number
+        }
+        Insert: {
+          description: string
+          emoji: string
+          id: string
+          name: string
+          price: number
+          slot: Database["public"]["Enums"]["item_slot"]
+          sort_order?: number
+        }
+        Update: {
+          description?: string
+          emoji?: string
+          id?: string
+          name?: string
+          price?: number
+          slot?: Database["public"]["Enums"]["item_slot"]
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      streak_rewards: {
+        Row: {
+          claimed_at: string
+          gold: number
+          id: string
+          user_id: string
+          week_start: string
+          xp: number
+        }
+        Insert: {
+          claimed_at?: string
+          gold: number
+          id?: string
+          user_id: string
+          week_start: string
+          xp: number
+        }
+        Update: {
+          claimed_at?: string
+          gold?: number
+          id?: string
+          user_id?: string
+          week_start?: string
+          xp?: number
+        }
+        Relationships: []
+      }
+      user_items: {
+        Row: {
+          equipped: boolean
+          id: string
+          item_id: string
+          purchased_at: string
+          user_id: string
+        }
+        Insert: {
+          equipped?: boolean
+          id?: string
+          item_id: string
+          purchased_at?: string
+          user_id: string
+        }
+        Update: {
+          equipped?: boolean
+          id?: string
+          item_id?: string
+          purchased_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_items_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "shop_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      boss_hp_for_tier: { Args: { p_tier: number }; Returns: number }
+      boss_name_for_tier: { Args: { p_tier: number }; Returns: string }
+      claim_streak_reward: {
+        Args: { p_tz?: string; p_week_start: string }
+        Returns: Json
+      }
+      complete_quest: { Args: { p_quest_id: string }; Returns: Json }
+      ensure_profile: {
+        Args: { p_display_name?: string }
+        Returns: {
+          bosses_defeated: number
+          charisma: number
+          created_at: string
+          creativity: number
+          display_name: string
+          gold: number
+          id: string
+          intellect: number
+          level: number
+          mind: number
+          quests_completed: number
+          updated_at: string
+          vitality: number
+          wisdom: number
+          xp: number
+        }
+        SetofOptions: {
+          from: "*"
+          to: "profiles"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      equip_item: {
+        Args: { p_equip?: boolean; p_item_id: string }
+        Returns: undefined
+      }
+      level_for_xp: { Args: { p_xp: number }; Returns: number }
+      purchase_item: { Args: { p_item_id: string }; Returns: Json }
     }
     Enums: {
-      [_ in never]: never
+      item_slot: "outfit" | "theme" | "pet" | "weapon" | "badge"
+      quest_category:
+        | "coding"
+        | "studying"
+        | "meditation"
+        | "fitness"
+        | "creative"
+        | "social"
+      quest_difficulty: "easy" | "medium" | "hard" | "epic"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +452,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      item_slot: ["outfit", "theme", "pet", "weapon", "badge"],
+      quest_category: [
+        "coding",
+        "studying",
+        "meditation",
+        "fitness",
+        "creative",
+        "social",
+      ],
+      quest_difficulty: ["easy", "medium", "hard", "epic"],
+    },
   },
 } as const
