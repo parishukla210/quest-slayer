@@ -1,0 +1,10 @@
+REVOKE ALL ON FUNCTION public.ensure_profile(text) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.complete_quest(uuid) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.purchase_item(text) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.equip_item(text, boolean) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.claim_streak_reward(date, text) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.ensure_profile(text) TO authenticated, service_role;
+GRANT EXECUTE ON FUNCTION public.complete_quest(uuid) TO authenticated, service_role;
+GRANT EXECUTE ON FUNCTION public.purchase_item(text) TO authenticated, service_role;
+GRANT EXECUTE ON FUNCTION public.equip_item(text, boolean) TO authenticated, service_role;
+GRANT EXECUTE ON FUNCTION public.claim_streak_reward(date, text) TO authenticated, service_role;
